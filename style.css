@@ -1,0 +1,70 @@
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+}
+
+.flex-wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    align-content: center;
+    justify-content: center;
+
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    align-self: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-color: aqua;
+
+    max-width: 300px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.display {
+    background-color: red;
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    margin: 0px;
+}
+
+.output {
+    background-color: black;
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+
+    padding: 10px;
+    margin: 0px;
+}
+
+button {
+
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+}
