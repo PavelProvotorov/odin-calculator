@@ -1,23 +1,32 @@
+* {
+    font-size: 36px;
+}
+
 html {
+     /* Size */
     height: 100vh;
 }
 
 body {
+     /* Size */
     height: 100vh;
 }
 
 .flex-wrapper {
+    /* Flex */
     display: flex;
     flex: 1 1 auto;
     align-content: center;
     justify-content: center;
 
+     /* Size */
     height: 100%;
     padding: 0px;
     margin: 0px;
 }
 
 .container {
+    /* Flex */
     display: flex;
     flex: 1 1 auto;
     align-self: center;
@@ -25,20 +34,24 @@ body {
     justify-content: center;
     flex-direction: column;
 
-    border-radius: 10px;
-    background-color:darkgray;
+    /* Color */
+    box-shadow: 5px 8px 0px 5px #212123;
+    background-color:#b8b5b9;
 
+     /* Size */
+    border-radius: 10px;
     max-width: 350px;
     padding: 0px;
     margin: 0px;
 }
 
 .display {
-    background-color: darkgray;
+    /* Color */
+    background-color: #b8b5b9;
     box-sizing: border-box;
-
-    border-radius: 10px;
     
+     /* Size */
+    border-radius: 10px;
     width: 100%;
     height: 150px;
     padding: 15px;
@@ -46,17 +59,19 @@ body {
 }
 
 .output {
+    /* Flex */
     display: flex;
     justify-content: right;
     align-items: end;
 
+    /* Color */
     color: white;
-    background-color: dimgray;
-    box-sizing: border-box;
-    
-    border-radius: 10px;
-    font-size: 36px;
+    background-color: #646365;
+    box-shadow: inset 5px 5px #212123;
 
+     /* Size */
+    box-sizing: border-box;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
     padding: 10px;
@@ -64,24 +79,51 @@ body {
 }
 
 .buttons {
+    /* Grid */
     display: grid;
     grid-template-columns: repeat(4, minmax(50px, 1fr));
     grid-template-rows: repeat(4, minmax(50px, 1fr));
     gap: 5px;
 
+     /* Size */
     padding: 15px;
     margin: 0px;
 }
 
-button {
-    font-size: 36px;
+.button-one-cell {
+    /* Color */
+    box-shadow: 2px 2px 0px 0px #212123;
+    background-color: #f2f0e5;
 
+     /* Size */
     border-radius: 10px;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     padding: 0px;
     margin: 0px;
 }
 
-.button-colored {
-    background-color: gold;
+.button-two-cell {
+    /* Grid */
+    grid-column: span 2;
+    grid-row: span 1;
+
+    /* Color */
+    box-shadow: 2px 2px 0px 0px #212123;
+    background-color: #f2f0e5;
+
+     /* Size */
+    border-radius: 10px;
+    aspect-ratio: 0; /* prevents element from growing in height more than other grid elements */
+    padding: 0px;
+    margin: 0px;
+}
+
+.button-color-yellow {
+    /* Color */
+    background-color: #f3a833;
+}
+
+.button-color-red {
+    /* Color */
+    background-color: #ec273f;
 }
