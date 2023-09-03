@@ -15,31 +15,31 @@
         <div id="__container__" class="container">
             <div id="__calcualtorDisplay__" class="display">
                 <div id="__calculatorOutput" class="output">
-                    <div>25</div>
-                    <div>*</div>
-                    <div>100000000000</div>
+                    <div id="__previousValue__">25</div>
+                    <div id="__selectedOperator__">X</div>
+                    <div id="__currentValue__">100000000000</div>
                 </div>
             </div> 
             <div id="__buttons__" class="buttons">
-                <button class="button-color-red button-one-cell">C</button>
-                <button class="button-one-cell">&#8680</button>
-                <button class="button-one-cell"></button>
-                <button class="button-color-yellow button-one-cell">/</button>
-                <button class="button-one-cell">7</button>
-                <button class="button-one-cell">8</button>
-                <button class="button-one-cell">9</button>
-                <button class="button-color-yellow button-one-cell">*</button>
-                <button class="button-one-cell">4</button>
-                <button class="button-one-cell">5</button>
-                <button class="button-one-cell">6</button>
-                <button class="button-color-yellow button-one-cell">-</button>
-                <button class="button-one-cell">1</button>
-                <button class="button-one-cell">2</button>
-                <button class="button-one-cell">3</button>
-                <button class="button-color-yellow button-one-cell">+</button>
-                <button class="button-two-cell">0</button>
-                <button class="button-one-cell">.</button>
-                <button class="button-color-yellow button-one-cell">=</button>
+                <button data-type="erase" data-value="" class="active button-color-red button-one-cell">C</button>
+                <button data-type="clear" data-value="" class="active button-one-cell">&#8680</button>
+                <button data-type="operator" data-value="%" class="active button-one-cell">%</button>
+                <button data-type="operator" data-value="/" class="active button-color-yellow button-one-cell">/</button>
+                <button data-type="number" data-value="7" class="active button-one-cell">7</button>
+                <button data-type="number" data-value="8" class="active button-one-cell">8</button>
+                <button data-type="number" data-value="9" class="active button-one-cell">9</button>
+                <button data-type="operator" data-value="*" class="active button-color-yellow button-one-cell">*</button>
+                <button data-type="number" data-value="4" class="active button-one-cell">4</button>
+                <button data-type="number" data-value="5" class="active button-one-cell">5</button>
+                <button data-type="number" data-value="6" class="active button-one-cell">6</button>
+                <button data-type="operator" data-value="-" class="active button-color-yellow button-one-cell">-</button>
+                <button data-type="number" data-value="1" class="active button-one-cell">1</button>
+                <button data-type="number" data-value="2" class="active button-one-cell">2</button>
+                <button data-type="number" data-value="3" class="active button-one-cell">3</button>
+                <button data-type="operator" data-value="+" class="active button-color-yellow button-one-cell">+</button>
+                <button data-type="number" data-value="0" class="active button-two-cell">0</button>
+                <button data-type="number" data-value="." class="active button-one-cell">.</button>
+                <button data-type="enter" data-value="=" class="active button-color-yellow button-one-cell">=</button>
             </div>
         </div>
     </div>
