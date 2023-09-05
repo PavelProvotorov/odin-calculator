@@ -45,11 +45,23 @@ function clearStorage() {
     STORED_OPERATOR  = null
     STORED_VALUE = null
     return
-}
+};
+
+function checkError() {
+    const value = CURRENT_VALUE.textContent
+    if(value === "ERROR"){
+        clearDisplay()
+        clearStorage()
+    };
+};
 
 function addText(target, value){
     const current_value = target.textContent
-    if (current_value.length < 12){
+    if ((current_value === "0") && (value != ".")) {
+        return target.textContent = value
+    } else if (current_value.includes(".") && (value === ".")){
+        return target.textContent
+    } else if (current_value.length < 12){
         return target.textContent += value
     };
 };
@@ -87,6 +99,7 @@ NUMBER_BUTTONS.forEach((button) => {
     button.addEventListener("click", (event) => {
         const element = event.target
         const element_value = element.getAttribute("data-value")
+        checkError()
         if(INPUT !== SELECTED_OPERATOR){
             addText(INPUT, element_value)
             return
@@ -98,6 +111,7 @@ OPERATOR_BUTTONS.forEach((button) => {
     button.addEventListener("click", (event) => {
         const element = event.target
         const element_value = element.getAttribute("data-value")
+        checkError()
         if ((INPUT === CURRENT_VALUE) && (CURRENT_VALUE.textContent.length >= 1) && (PREVIOUS_VALUE.textContent.length === 0)) {
             addText(SELECTED_OPERATOR, element_value)
             PREVIOUS_VALUE.textContent = CURRENT_VALUE.textContent
@@ -121,10 +135,11 @@ ENTER_BUTTON.forEach((button) => {
         const element = event.target
         const element_type = element.getAttribute("data-type")
         const element_value = element.getAttribute("data-value")
+        checkError()
         if ((PREVIOUS_VALUE.textContent.length >= 1) && (CURRENT_VALUE.textContent.length >= 1)){
             const operator = SELECTED_OPERATOR.textContent
-            const value_a = parseInt(PREVIOUS_VALUE.textContent)
-            const value_b = parseInt(CURRENT_VALUE.textContent)
+            const value_a = parseFloat(PREVIOUS_VALUE.textContent)
+            const value_b = parseFloat(CURRENT_VALUE.textContent)
             const value_c = calculate(operator, value_a,value_b)
             clearDisplay()
             STORED_VALUE = value_b
@@ -134,8 +149,8 @@ ENTER_BUTTON.forEach((button) => {
             return
         } else if ((STORED_VALUE != null) && (STORED_OPERATOR != null) && (CURRENT_VALUE.textContent.length >= 1)){
             const operator = STORED_OPERATOR
-            const value_a = parseInt(CURRENT_VALUE.textContent)
-            const value_b = parseInt(STORED_VALUE)
+            const value_a = parseFloat(CURRENT_VALUE.textContent)
+            const value_b = parseFloat(STORED_VALUE)
             const value_c = calculate(operator, value_a, value_b)
             clearDisplay()
             INPUT  = SELECTED_OPERATOR
