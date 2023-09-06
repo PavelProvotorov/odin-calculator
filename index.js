@@ -75,22 +75,22 @@ function removeText(target) {
 };
 
 function sum(a, b) {
-    return a + b
+    return (a + b).toPrecision(12).replace(/\.?0+$/, '');
 };
 
 function subtract(a, b) {
-    return a - b
+    return (a - b).toPrecision(12).replace(/\.?0+$/, '');
 };
 
 function multiply (a, b) {
-    return a * b
+    return (a * b).toPrecision(12).replace(/\.?0+$/, '');
 };
 
 function divide(a, b) {
     if (a === 0 && b === 0){
         return "ERROR"
     } else {
-        return a / b
+        return (a / b).toPrecision(12).replace(/\.?0+$/, '');
     };
 };
 
