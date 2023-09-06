@@ -1,6 +1,7 @@
 // VARIABLES
 const ENTER_BUTTON = document.querySelectorAll("[data-type='enter']")
 const CLEAR_BUTTON = document.querySelectorAll("[data-type='clear']")
+const CLEAR_ENTRY_BUTTON = document.querySelectorAll("[data-type='clear_entry']")
 const REMOVE_BUTTON = document.querySelectorAll("[data-type='remove']")
 const OPERATOR_BUTTONS = document.querySelectorAll("[data-type='operator']")
 const NUMBER_BUTTONS = document.querySelectorAll("[data-type='number']")
@@ -118,7 +119,7 @@ OPERATOR_BUTTONS.forEach((button) => {
             CURRENT_VALUE.textContent = ""
             INPUT = CURRENT_VALUE
             return
-        } else if ((INPUT === SELECTED_OPERATOR) && (SELECTED_OPERATOR.textContent.length === 0)) {
+        } else if ((INPUT === SELECTED_OPERATOR) && (SELECTED_OPERATOR.textContent.length === 0) && (CURRENT_VALUE.textContent.length >= 1)) {
             addText(SELECTED_OPERATOR, element_value)
             PREVIOUS_VALUE.textContent = CURRENT_VALUE.textContent
             CURRENT_VALUE.textContent = ""
@@ -166,6 +167,17 @@ CLEAR_BUTTON.forEach((button) => {
         clearDisplay()
         clearStorage()
         return
+    });
+});
+
+CLEAR_ENTRY_BUTTON.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        if (INPUT === CURRENT_VALUE){
+            CURRENT_VALUE.textContent = ""
+            return
+        } else {
+            return
+        }
     });
 });
 
