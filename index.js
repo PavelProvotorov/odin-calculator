@@ -1,4 +1,7 @@
 // VARIABLES
+const MAX_LENGTH = 18
+const MAX_PRECISION = 12
+// ---- >
 const ENTER_BUTTON = document.querySelectorAll("[data-type='enter']")
 const CLEAR_BUTTON = document.querySelectorAll("[data-type='clear']")
 const CLEAR_ENTRY_BUTTON = document.querySelectorAll("[data-type='clear_entry']")
@@ -19,18 +22,69 @@ let STORED_VALUE = null
 console.log("<Script started>")
 
 // FUNCTIONS
-function calculate(operator ,value_a, value_b) {
-    switch(operator) {
-        case "+":
-            return sum(value_a, value_b)
-        case "-":
-            return subtract(value_a, value_b)
-        case "x":
-            return multiply(value_a, value_b)
-        case "/":
-            return divide(value_a, value_b)
-        default:
-            return "ERROR"
+
+function calculateOnStoredInput() {
+    const operator = STORED_OPERATOR
+    const value_a = parseFloat(CURRENT_VALUE.textContent)
+    const value_b = parseFloat(STORED_VALUE)
+    const value_c = calculate(operator, value_a, value_b)
+    clearDisplay()
+    INPUT  = SELECTED_OPERATOR
+    CURRENT_VALUE.textContent = value_c
+};
+
+function calculateOnNewInput() {
+    const operator = SELECTED_OPERATOR.textContent
+    const value_a = parseFloat(PREVIOUS_VALUE.textContent)
+    const value_b = parseFloat(CURRENT_VALUE.textContent)
+    const value_c = calculate(operator, value_a,value_b)
+    clearDisplay()
+    STORED_VALUE = value_b
+    STORED_OPERATOR  = operator
+    INPUT  = SELECTED_OPERATOR
+    CURRENT_VALUE.textContent = value_c
+};
+
+function handleSubsequentOperatorClick(value) {
+    const operator = SELECTED_OPERATOR.textContent
+    const value_a = parseFloat(PREVIOUS_VALUE.textContent)
+    const value_b = parseFloat(CURRENT_VALUE.textContent)
+    const value_c = calculate(operator, value_a,value_b)
+    clearDisplay()
+    STORED_VALUE = value_b
+    STORED_OPERATOR  = operator
+    INPUT  = CURRENT_VALUE
+    SELECTED_OPERATOR.textContent = value
+    PREVIOUS_VALUE.textContent = value_c
+};
+
+function handleOperatorClick(value) {
+    addText(SELECTED_OPERATOR, value)
+    PREVIOUS_VALUE.textContent = CURRENT_VALUE.textContent
+    CURRENT_VALUE.textContent = ""
+    INPUT = CURRENT_VALUE
+};
+
+function isInputStored() {
+    return (
+        STORED_VALUE != null &&
+        STORED_OPERATOR != null && 
+        !isInputEmpty(CURRENT_VALUE)
+    )
+};
+
+function isInputNew() {
+    return (
+        !isInputEmpty(PREVIOUS_VALUE) && 
+        !isInputEmpty(CURRENT_VALUE)
+    )
+};
+
+function isInputEmpty(input) {
+    if (input.textContent.length === 0){
+        return true
+    } else {
+        return false
     };
 };
 
@@ -39,13 +93,11 @@ function clearDisplay() {
     SELECTED_OPERATOR.textContent = ""
     PREVIOUS_VALUE.textContent = ""
     CURRENT_VALUE.textContent = ""
-    return
 };
 
 function clearStorage() {
     STORED_OPERATOR  = null
     STORED_VALUE = null
-    return
 };
 
 function checkError() {
@@ -62,7 +114,7 @@ function addText(target, value){
         return target.textContent = value
     } else if (current_value.includes(".") && (value === ".")){
         return target.textContent
-    } else if (current_value.length < 12){
+    } else if (current_value.length < MAX_LENGTH){
         return target.textContent += value
     };
 };
@@ -75,23 +127,38 @@ function removeText(target) {
     };
 };
 
+function calculate(operator ,value_a, value_b) {
+    switch(operator) {
+        case "+":
+            return sum(value_a, value_b)
+        case "-":
+            return subtract(value_a, value_b)
+        case "x":
+            return multiply(value_a, value_b)
+        case "/":
+            return divide(value_a, value_b)
+        default:
+            return "ERROR"
+    };
+};
+
 function sum(a, b) {
-    return (a + b).toPrecision(12).replace(/\.?0+$/, '');
+    return (a + b).toPrecision(MAX_PRECISION).replace(/\.?0+$/, '');
 };
 
 function subtract(a, b) {
-    return (a - b).toPrecision(12).replace(/\.?0+$/, '');
+    return (a - b).toPrecision(MAX_PRECISION).replace(/\.?0+$/, '');
 };
 
 function multiply (a, b) {
-    return (a * b).toPrecision(12).replace(/\.?0+$/, '');
+    return (a * b).toPrecision(MAX_PRECISION).replace(/\.?0+$/, '');
 };
 
 function divide(a, b) {
     if (a === 0 && b === 0){
         return "ERROR"
     } else {
-        return (a / b).toPrecision(12).replace(/\.?0+$/, '');
+        return (a / b).toPrecision(MAX_PRECISION).replace(/\.?0+$/, '');
     };
 };
 
@@ -113,18 +180,15 @@ OPERATOR_BUTTONS.forEach((button) => {
         const element = event.target
         const element_value = element.getAttribute("data-value")
         checkError()
-        if ((INPUT === CURRENT_VALUE) && (CURRENT_VALUE.textContent.length >= 1) && (PREVIOUS_VALUE.textContent.length === 0)) {
-            addText(SELECTED_OPERATOR, element_value)
-            PREVIOUS_VALUE.textContent = CURRENT_VALUE.textContent
-            CURRENT_VALUE.textContent = ""
-            INPUT = CURRENT_VALUE
+
+        if (INPUT === CURRENT_VALUE && !isInputEmpty(CURRENT_VALUE) && isInputEmpty(PREVIOUS_VALUE)) {
+            handleOperatorClick(element_value)
             return
-        } else if ((INPUT === SELECTED_OPERATOR) && (SELECTED_OPERATOR.textContent.length === 0) && (CURRENT_VALUE.textContent.length >= 1)) {
-            addText(SELECTED_OPERATOR, element_value)
-            PREVIOUS_VALUE.textContent = CURRENT_VALUE.textContent
-            CURRENT_VALUE.textContent = ""
-            INPUT = CURRENT_VALUE
+        } else if (INPUT === SELECTED_OPERATOR && isInputEmpty(SELECTED_OPERATOR) && !isInputEmpty(CURRENT_VALUE)) {
+            handleOperatorClick(element_value)
             return
+        } else if (INPUT === CURRENT_VALUE && !isInputEmpty(CURRENT_VALUE) && !isInputEmpty(PREVIOUS_VALUE) && !isInputEmpty(SELECTED_OPERATOR)){
+            handleSubsequentOperatorClick(element_value)
         } else {
             return
         };
@@ -133,29 +197,13 @@ OPERATOR_BUTTONS.forEach((button) => {
 
 ENTER_BUTTON.forEach((button) => {
     button.addEventListener("click", (event) => {
-        const element = event.target
-        const element_type = element.getAttribute("data-type")
-        const element_value = element.getAttribute("data-value")
         checkError()
-        if ((PREVIOUS_VALUE.textContent.length >= 1) && (CURRENT_VALUE.textContent.length >= 1)){
-            const operator = SELECTED_OPERATOR.textContent
-            const value_a = parseFloat(PREVIOUS_VALUE.textContent)
-            const value_b = parseFloat(CURRENT_VALUE.textContent)
-            const value_c = calculate(operator, value_a,value_b)
-            clearDisplay()
-            STORED_VALUE = value_b
-            STORED_OPERATOR  = operator
-            INPUT  = SELECTED_OPERATOR
-            CURRENT_VALUE.textContent = value_c
+
+        if (isInputNew()){
+            calculateOnNewInput()
             return
-        } else if ((STORED_VALUE != null) && (STORED_OPERATOR != null) && (CURRENT_VALUE.textContent.length >= 1)){
-            const operator = STORED_OPERATOR
-            const value_a = parseFloat(CURRENT_VALUE.textContent)
-            const value_b = parseFloat(STORED_VALUE)
-            const value_c = calculate(operator, value_a, value_b)
-            clearDisplay()
-            INPUT  = SELECTED_OPERATOR
-            CURRENT_VALUE.textContent = value_c
+        } else if (isInputStored()){
+            calculateOnStoredInput()
         } else {
             return
         };
@@ -177,14 +225,16 @@ CLEAR_ENTRY_BUTTON.forEach((button) => {
             return
         } else {
             return
-        }
+        };
     });
 });
 
 REMOVE_BUTTON.forEach((button) => {
     button.addEventListener("click", (event) => {
-        if((INPUT === CURRENT_VALUE || INPUT === PREVIOUS_VALUE)){
+        if(INPUT !== SELECTED_OPERATOR){
             removeText(INPUT)
+            return
+        } else {
             return
         };
     });
