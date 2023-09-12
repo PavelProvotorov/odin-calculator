@@ -1,4 +1,7 @@
 * {
+    /* Mobile */
+    touch-action: manipulation; /* Prevents zoom on double-tap*/
+
     /* Font */
     font-family: 'Star Shield', sans-serif;
     font-size: 36px;
@@ -127,6 +130,11 @@ body {
         /* Size */
         min-height: 32px;
     }
+}
+
+button {
+    /* Color */
+    color: black;
 }
 
 .buttons {
