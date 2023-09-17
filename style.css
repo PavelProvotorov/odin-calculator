@@ -135,6 +135,17 @@ body {
 button {
     /* Color */
     color: black;
+    border-color: black;
+    border-style: outset;
+    border-width: 2px;
+}
+
+button:active {
+    /* Color */
+    color: black;
+    border-color: black;
+    border-style: inset;
+    border-width: 2px;
 }
 
 .buttons {
